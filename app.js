@@ -12,7 +12,7 @@ var config =
         default: 'arcade',
         arcade: {
             gravity: { y: 650 },
-            debug: false,
+            debug: true,
         }
     },
     scene: {
@@ -75,9 +75,9 @@ function preload ()
 function create ()
 {
     game = this;
-
+    
     game.add.image(400, 300, 'sky');
-
+    
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setDepth(1);
 
     platforms = game.physics.add.staticGroup();
@@ -154,6 +154,8 @@ function create ()
     // playerContainer.setInteractive(hitArea, Phaser.Geom.Circle.Contains);
     
     game.input.keyboard.on('keydown_A', function(event){
+        if (player.flipX) { sword.x = playerContainer.x - 32; }
+        else { sword.x = playerContainer.x + 32; }
         game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
         sword.body.setAllowGravity(false);
         // sword.setInteractive();
@@ -168,6 +170,17 @@ function create ()
         game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
         // sword.disableInteractive();
         // game.input.removeDebug(sword);
+    });
+
+    game.input.keyboard.on('keydown_S', function(event){
+        if (player.flipX) { sword.x = playerContainer.x - 32; }
+        else { sword.x = playerContainer.x + 32; }
+        game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
+        sword.body.setAllowGravity(false);
+    });
+
+    game.input.keyboard.on('keyup_S', function(event){
+        game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
     });
 
     // game.physics.add.collider(playerContainer, enemies);
@@ -456,6 +469,12 @@ function create ()
 
 function update ()
 {
+    if (score === 80)
+    {
+        scoreText.setText("You Win!");
+        scoreText.setPosition(323, 283);
+    }
+
     game = this;
 
     if (!game.isPlayerContainerAlive)
@@ -496,13 +515,17 @@ function update ()
     }
     else if (s.isDown) // Phaser.Input.Keyboard.JustDown(s)
     {
+        sword.y = playerContainer.y + 10;
+        if (player.flipX) { sword.x = playerContainer.x - 32; }
+        else { sword.x = playerContainer.x + 32; }
         player.anims.play('verticalSlash', true);
     }
     else if (a.isDown)
     {
         // sword.setAngle(-45);
-        sword.x = playerContainer.x + 32;
         sword.y = playerContainer.y + 10;
+        if (player.flipX) { sword.x = playerContainer.x - 32; }
+        else { sword.x = playerContainer.x + 32; }
         // sword.setAngle(-45);
         player.anims.play('horizontalSlash', true);
     }

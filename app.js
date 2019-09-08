@@ -55,7 +55,7 @@ function preload ()
 
     game.load.image('sky', 'assets/bench_scene.jpg');
     // game.load.image('bench', 'assets/bench.png');
-    game.load.image('trashCan', 'assets/trash_can.png');
+    // game.load.image('trashCan', 'assets/trash_can.png');
     game.load.image('empty', 'assets/empty.png');
     game.load.image('avocado', 'assets/avocado.png');
     game.load.spritesheet('bird', 'assets/bird_robin.png',
@@ -80,62 +80,6 @@ function create ()
     
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setDepth(1);
 
-    platforms = game.physics.add.staticGroup();
-    
-    // platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-    
-    ground = platforms.create(400, 597, 'empty'); // ground
-    ground.setSize(800, 5);
-    bench = platforms.create(213, 534, 'empty'); //bench platform
-    bench.setSize(222, 2);
-    bench.body.checkCollision.down = false;
-    bench.body.checkCollision.left = false;
-    bench.body.checkCollision.right = false;
-    trashCan = platforms.create(58, 509, 'empty'); //trash can platform
-    trashCan.setSize(56, 4);
-    trashCan.body.checkCollision.down = false;
-    trashCan.body.checkCollision.left = false;
-    trashCan.body.checkCollision.right = false;
-    
-    playerContainer = game.add.container(59, 50).setDepth(1).setScale(2);
-    game.physics.world.enable(playerContainer);
-    playerContainer.body.setCollideWorldBounds(true);
-    playerContainer.body.setBounce(0.2);
-    // playerContainer.setScale(2);
-    playerContainer.body.setOffset(-7, -8)
-    // playerContainer.body.offset.x = -7;
-    // playerContainer.body.offset.y = -8;
-    playerContainer.body.setSize(14, 26, false);
-    
-    game.physics.add.collider(playerContainer, platforms);
-    
-    player = game.add.sprite(0, 0, 'dude', 105);    // game.physics.add.sprite(0, 0, 'dude', 105);
-    // player.setBounce(0.2);
-    // player.setCollideWorldBounds(true);
-    // player.body.setOffset(18, 10)
-    // player.body.offset.x = 18;
-    // player.body.offset.y = 10;
-    // player.setSize(14, 26, false);
-
-    // game.physics.add.collider(player, platforms);
-    
-    // add weapon
-    // sword = game.add.sprite(15, 5, 'trashCan').setScale(0.2);
-    sword = game.add.zone(0, 0, 37, 10); //playerContainer.x, playerContainer.y); // .setSize(50, 50);
-    // sword.body.moves = false;
-    //new Phaser.Geom.Rectangle(playerContainer.x, playerContainer.y, 20, 20), Phaser.Geom.Rectangle.Contains);
-    // game.input.setHitAreaRectangle(sword, 50, 0, 100, 100, Phaser.Geom.Rectangle.Contains);
-    // sword.angle = -10;
-    // sword.enableBody = true;
-    // game.physics.world.enable(sword);
-    // sword.setScale(0.5);
-    // sword.setSize(100, 100);
-    // sword.setState(1)
-    // sword.state = { attacking: false }
-    
-    playerContainer.add( player );
-    playerContainer.add( [], sword );
-    
     bird = game.add.sprite(100, 100, 'bird', 0).setScale(0.5);
     bird.flipX = true;
     
@@ -150,50 +94,49 @@ function create ()
         hold: 0
     });
 
+    platforms = game.physics.add.staticGroup();
+    
+    // platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    
+    ground = platforms.create(400, 597, 'empty'); // ground
+    ground.setSize(800, 5);
+    
+    bench = platforms.create(213, 534, 'empty'); //bench platform
+    bench.setSize(222, 2);
+    bench.body.checkCollision.down = false;
+    bench.body.checkCollision.left = false;
+    bench.body.checkCollision.right = false;
+
+    trashCan = platforms.create(58, 509, 'empty'); //trash can platform
+    trashCan.setSize(56, 4);
+    trashCan.body.checkCollision.down = false;
+    trashCan.body.checkCollision.left = false;
+    trashCan.body.checkCollision.right = false;
+    
+    playerContainer = game.add.container(59, 50).setDepth(1).setScale(2);
+    game.physics.world.enable(playerContainer);
+    playerContainer.body.setCollideWorldBounds(true);
+    playerContainer.body.setBounce(0.2);
+    playerContainer.body.setOffset(-7, -8)
+    playerContainer.body.setSize(14, 26, false);
+    
+    game.physics.add.collider(playerContainer, platforms);
+    
+    player = game.add.sprite(0, 0, 'dude', 105);    // game.physics.add.sprite(0, 0, 'dude', 105);
+    
+    // add weapon
+    sword = game.add.zone(0, 0, 37, 10);
+    // sword.body.moves = false;
+    //new Phaser.Geom.Rectangle(playerContainer.x, playerContainer.y, 20, 20), Phaser.Geom.Rectangle.Contains);
+    // game.input.setHitAreaRectangle(sword, 50, 0, 100, 100, Phaser.Geom.Rectangle.Contains);
+    // sword.enableBody = true;
+    // sword.setState(1)
+    
+    playerContainer.add( player );
+    playerContainer.add( [], sword );
+
     // var hitArea = new Phaser.Geom.Circle(0, 0, 60);
     // playerContainer.setInteractive(hitArea, Phaser.Geom.Circle.Contains);
-    
-    game.input.keyboard.on('keydown_A', function(event){
-        if (player.flipX) { sword.x = playerContainer.x - 32; }
-        else { sword.x = playerContainer.x + 32; }
-        game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
-        sword.body.setAllowGravity(false);
-        // sword.setInteractive();
-        // sword.input.hitArea.setTo(0, 0, 37, 10);
-        console.log(sword.angle);
-        sword.angle = -180;
-        console.log(sword.angle);
-        // game.input.enableDebug(sword);
-    });
-
-    game.input.keyboard.on('keyup_A', function(event){
-        game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
-        // sword.disableInteractive();
-        // game.input.removeDebug(sword);
-    });
-
-    game.input.keyboard.on('keydown_S', function(event){
-        if (player.flipX) { sword.x = playerContainer.x - 32; }
-        else { sword.x = playerContainer.x + 32; }
-        game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
-        sword.body.setAllowGravity(false);
-    });
-
-    game.input.keyboard.on('keyup_S', function(event){
-        game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
-    });
-
-    // game.physics.add.collider(playerContainer, enemies);
-
-    function slashEnemy(sword, enemy)
-    {
-        // if (sword.state.attacking)
-        // {
-            enemy.disableBody(true, true);
-            score += 20;
-            scoreText.setText('score: ' + score);
-        // }
-    }
 
     avocados = game.physics.add.group({
         key: 'avocado',
@@ -234,12 +177,6 @@ function create ()
         child.setSize(38, 40, false);
     });
     
-    game.input.on('pointerdown', function(pointer, currentlyOver){ console.log("x", pointer.x, "y", pointer.y) });
-
-    game.physics.add.overlap(sword, enemies, slashEnemy, null, game);
-    // sword.on('enterzone', () => console.log('enterzone'));
-    // sword.on('leavezone', () => console.log('leavezone'));
-
     // set speeds
     Phaser.Actions.Call(enemies.getChildren(), function(minotaur) {
         minotaur.speed = - (Math.floor(Math.random() * 100 + 80));
@@ -253,29 +190,42 @@ function create ()
         gameOver();
     }
 
-    // console.log(sword.getBounds());
-    // console.log(enemies.getChildren()[0].getBounds());
-
     gameOver = () => {
  
         // flag to set player is dead
         game.isPlayerContainerAlive = false;
        
         // shake the camera
-        game.cameras.main.shake(500);
+        game.time.delayedCall(100, function() {
+            game.cameras.main.shake(1100);
+        }, [], game);
        
         // fade camera
-        game.time.delayedCall(250, function() {
-          game.cameras.main.fade(250);
+        game.time.delayedCall(300, function() {
+          game.cameras.main.fade(900);
         }, [], game);
        
         // restart game
-        game.time.delayedCall(500, function() {
+        game.time.delayedCall(1200, function() {
           game.scene.restart();
         }, [], game);
        
         score = 0;
         scoreText.setText('score: ' + score); 
+    }
+
+    game.physics.add.overlap(sword, enemies, slashEnemy, null, game);
+    // sword.on('enterzone', () => console.log('enterzone'));
+    // sword.on('leavezone', () => console.log('leavezone'));
+
+    function slashEnemy(sword, enemy)
+    {
+        // if (sword.state.attacking)
+        // {
+            enemy.disableBody(true, true);
+            score += 20;
+            scoreText.setText('score: ' + score);
+        // }
     }
 
     game.anims.create({
@@ -400,6 +350,38 @@ function create ()
         }
     });
 
+    game.input.keyboard.on('keydown_A', function(event){
+        if (player.flipX) { sword.x = playerContainer.x - 32; }
+        else { sword.x = playerContainer.x + 32; }
+        game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
+        sword.body.setAllowGravity(false);
+        // sword.setInteractive();
+        // sword.input.hitArea.setTo(0, 0, 37, 10);
+        console.log(sword.angle);
+        sword.angle = -180;
+        console.log(sword.angle);
+        // game.input.enableDebug(sword);
+    });
+
+    game.input.keyboard.on('keyup_A', function(event){
+        game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
+        // sword.disableInteractive();
+        // game.input.removeDebug(sword);
+    });
+
+    game.input.keyboard.on('keydown_S', function(event){
+        if (player.flipX) { sword.x = playerContainer.x - 32; }
+        else { sword.x = playerContainer.x + 32; }
+        game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
+        sword.body.setAllowGravity(false);
+    });
+
+    game.input.keyboard.on('keyup_S', function(event){
+        game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
+    });
+
+    game.input.on('pointerdown', function(pointer, currentlyOver){ console.log("x", pointer.x, "y", pointer.y) });
+
     // // Phaser 2 hitboxes
     // // create a group for all the player's hitboxes
     // hitboxes = game.add.group();
@@ -449,22 +431,6 @@ function create ()
     //     "crouch": Phaser.Input.Keyboard.KeyCodes.C,
     //     "punch": Phaser.Input.Keyboard.KeyCodes.P,
     // })
-    
-    // var particles = game.add.particles('red');
-
-    // var emitter = particles.createEmitter({
-    //     speed: 1000,
-    //     scale: { start: 2, end: 0 },
-    //     blendMode: 'ADD'
-    // });
-
-    // var logo = game.physics.add.image(400, 100, 'logo');
-
-    // logo.setVelocity(300, 600);
-    // logo.setBounce(1, 1);
-    // logo.setCollideWorldBounds(true);
-
-    // emitter.startFollow(logo);
 }
 
 function update ()

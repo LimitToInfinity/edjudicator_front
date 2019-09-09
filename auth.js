@@ -4,17 +4,17 @@ function postLoad() {
 
     const loginURL = "http://127.0.0.1:8000/api/v1/auth/login/";
     const registerURL = "http://127.0.0.1:8000/api/v1/auth/register/";
-    const songsURL = "http://127.0.0.1:8000/api/v1/songs/";
+    const highScoresURL = "http://127.0.0.1:8000/api/v1/highscores/";
 
     const guestLoginButton = document.querySelector(".guest-button");
     const loginForm = document.querySelector(".login-form");
     const registerForm = document.querySelector(".register-form");
-    const allSongsButton = document.querySelector(".all-songs");
+    const allHighScoresButton = document.querySelector(".all-high-scores");
     
     guestLoginButton.addEventListener("click", guestLogin);
     loginForm.addEventListener("submit", login);
     registerForm.addEventListener("submit", register);
-    allSongsButton.addEventListener("click", getAllSongs);
+    allHighScoresButton.addEventListener("click", getAllHighScores);
 
     function login(event)
     {
@@ -45,14 +45,14 @@ function postLoad() {
         {
             localStorage.setItem('username', json.username);
             localStorage.setItem('email', json.email);
-            localStorage.setItem('token', json.token.token);
+            localStorage.setItem('token', json.token);
             window.location.replace("game.html");
         });
     }
 
     function guestLogin(event)
     {
-        const username = "guest";
+        const username = "Guest";
         const password = "guest";
 
         const loginBody =
@@ -75,7 +75,7 @@ function postLoad() {
         {
             localStorage.setItem('username', json.username);
             localStorage.setItem('email', json.email);
-            localStorage.setItem('token', json.token.token);
+            localStorage.setItem('token', json.token);
             window.location.replace("game.html");
         });
     }
@@ -111,18 +111,19 @@ function postLoad() {
         {
             localStorage.setItem('username', json.username);
             localStorage.setItem('email', json.email);
-            localStorage.setItem('token', json.token.token);
+            localStorage.setItem('token', json.token);
+            window.location.replace("game.html");
         });
     }
 
-    function getAllSongs()
+    function getAllHighScores()
     {
         const myHeaders = new Headers({
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem("token")}`
         });
         
-        return fetch(`${songsURL}`, {
+        return fetch(`${highScoresURL}`, {
             method: 'GET',
             headers: myHeaders,
         })
@@ -130,8 +131,8 @@ function postLoad() {
             if (response.status === 200) { return response.json(); }
             else { throw new Error('Something went wrong on api server!'); }
         })
-        .then(songs => {
-                console.log(songs);
+        .then(highScores => {
+                console.log(highScores);
             })
             // .catch(error => {
             //     console.error(error);

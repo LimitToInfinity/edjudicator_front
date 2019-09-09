@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", postLoad)
 
 function postLoad() {
 
-    const loginURL = "http://127.0.0.1:8000/api/v1/auth/login/";
-    const registerURL = "http://127.0.0.1:8000/api/v1/auth/register/";
-    const highScoresURL = "http://127.0.0.1:8000/api/v1/highscores/";
+    const loginURL = "https://edjudicatorback.herokuapp.com/api/v1/auth/login/";
+    const registerURL = "https://edjudicatorback.herokuapp.com/api/v1/auth/register/";
+    const highScoresURL = "https://edjudicatorback.herokuapp.com/api/v1/highscores/";
 
     const guestLoginButton = document.querySelector(".guest-button");
     const loginForm = document.querySelector(".login-form");

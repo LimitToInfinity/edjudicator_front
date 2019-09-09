@@ -2,137 +2,41 @@ document.addEventListener("DOMContentLoaded", postLoad)
 
 function postLoad() {
 
-// fetch('/user/data', {
-//     method: 'GET',
-//     headers: {
-//       'Authorization': 'Bearer' + authToken
-//     }
-//   })
-//   .then(res => res.json())
-//   .then(data => { console.log(data) })
-//   .catch(err => { console.log(err) })
+    token = localStorage.getItem("token");
 
-// function getAllClients() {
-//     const myHeaders = new Headers({
-//         'Content-Type': 'application/json',
-//         'Authorization': 'your-token'
-//     });
+    if (!token)
+    { 
+        body = document.querySelector("body");
+
+        notLoggedInModal = document.createElement("div");
+        notLoggedInModal.classList.add("not-logged-in-modal");
+        notLoggedInModal.textContent = "Login to slay!"
+
+        homepageButton = document.createElement("button");
+        homepageButton.classList.add("homepage-button");
+        homepageButton.textContent = "Login!"
+        homepageButton.addEventListener("click", goToHomepage);
+
+        notLoggedInModal.append(homepageButton);
+
+        body.prepend(notLoggedInModal);
+    }
+
+    const logoutButton = document.querySelector(".logout-button");
     
-//     return fetch('http://localhost:8080/clients', {
-//       method: 'GET',
-//       headers: myHeaders,
-//     })
-    
-//     .then(response => {
-//         if (response.status === 200) {
-//           return response.json();
-//         } else {
-//           throw new Error('Something went wrong on api server!');
-//         }
-//       })
-//       .then(response => {
-//         console.debug(response);
-//       }).catch(error => {
-//         console.error(error);
-//       });
-//     }
-    
-//     getAllClients();
+    logoutButton.addEventListener("click", logout);
 
-// if (this.state.logged_in) {
-//     fetch('http://localhost:8000/core/current_user/', {
-//     headers: {
-//         Authorization: `JWT ${localStorage.getItem('token')}`
-//     }
-//     })
-//     .then(res => res.json())
-//     .then(json => {
-//         this.setState({ username: json.username });
-//     });
-// }
-
-//   handle_login = (e, data) => {
-//     e.preventDefault();
-//     fetch('http://localhost:8000/token-auth/', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(data)
-//     })
-//       .then(res => res.json())
-//       .then(json => {
-//         localStorage.setItem('token', json.token);
-//         this.setState({
-//           logged_in: true,
-//           displayed_form: '',
-//           username: json.user.username
-//         });
-//       });
-//   };
-
-//   handle_signup = (e, data) => {
-//     e.preventDefault();
-//     fetch('http://localhost:8000/core/users/', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(data)
-//     })
-//       .then(res => res.json())
-//       .then(json => {
-//         localStorage.setItem('token', json.token);
-//         this.setState({
-//           logged_in: true,
-//           displayed_form: '',
-//           username: json.username
-//         });
-//       });
-//   };
-
-//   handle_logout = () => {
-//     localStorage.removeItem('token');
-//     this.setState({ logged_in: false, username: '' });
-//   };
-
-    const loginURL = "http://127.0.0.1:8000/api/v1/auth/login/";
-    const registerURL = "http://127.0.0.1:8000/api/v1/auth/register/";
-
-    const loginForm = document.querySelector(".login-form");
-
-    loginForm.addEventListener("submit", login);
-
-    function login(event)
+    function logout()
     {
-        event.preventDefault();
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('token');
+        goToHomepage();
+    }
 
-        loginFormData = new FormData(loginForm);
-
-        const username = loginFormData.get("username");
-        const password = loginFormData.get("password");
-
-        const loginBody =
-        {
-            username,
-            password,
-        }
-
-        fetch(`${loginURL}`,
-        {
-            method: 'POST',
-            headers:
-            {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginBody)
-        })
-            .then(res => res.json())
-            .then(json =>
-            {
-                localStorage.setItem('token', json.token);
-                console.log(localStorage.getItem("token"));
-            });
+    function goToHomepage()
+    {
+        window.location.replace("index.html");
     }
 }
 

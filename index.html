@@ -7,11 +7,50 @@
     <link rel="stylesheet" href="app.css" />
     <!-- <script src="https://cdn.jsdelivr.net/npm/phaser@3.19.0/dist/phaser-arcade-physics.min.js"></script>  -->
     <script src="//cdn.jsdelivr.net/npm/phaser@3.19.0/dist/phaser.min.js"></script>
-    <script src="app.js"></script>
+    <script src="auth.js"></script>
     <title>Edjudicator</title>
 </head>
 <body>
     <h1>Edjudicator</h1>
-    <section class="world-map"></section>
+
+    <button class="guest-button">Login as Guest</button></a>
+
+    <form class="login-form">
+        <div class="username-input">
+            <label for="username">Username:</label>
+            <input type="text" id="login-username" name="username">
+        </div>
+        <div class="password-input">
+            <label for="password">Password:</label>
+            <input type="password" id="login-password" name="password">
+        </div>
+        <!-- <div class="email-input">
+            <label for="email">E-mail:</label>
+            <input type="email" id="login-email" name="email">
+        </div> -->
+        <div class="submit-button">
+            <input type="submit" value="Login" />
+        </div>
+    </form>
+
+    <form class="register-form">
+        <div class="username-input">
+            <label for="username">Username:</label>
+            <input type="text" id="register-username" name="username">
+        </div>
+        <div class="password-input">
+            <label for="password">Password:</label>
+            <input type="password" id="register-password" name="password">
+        </div>
+        <div class="email-input">
+            <label for="email">E-mail:</label>
+            <input type="email" id="register-email" name="email">
+        </div>
+        <div class="submit-button">
+            <input type="submit" value="Register" />
+        </div>
+    </form>
+    
+    <button class="all-songs">All Songs</button>
 </body>
 </html>

@@ -1,4 +1,28 @@
-h1 {
+body
+{
+    background-color: skyblue;
+}
+
+h1
+{
     color: orange;
     text-align: center;
+}
+
+button,
+input[type="submit"]
+{
+    background-color: gold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover,
+input[type="submit"]:hover
+{
+    background-color: rgb(254, 232, 108);
+    color: black;
+    border: none;
 }

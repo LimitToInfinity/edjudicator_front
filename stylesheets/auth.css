@@ -1,0 +1,111 @@
+/* @import url('https://fonts.googleapis.com/css?family=Walter+Turncoat&display=swap'); */
+
+main
+{
+    margin-top: 1rem auto;
+    display: flex;
+    justify-content: center;
+}
+
+.login-card,
+.login-form,
+.register-form,
+.username-input,
+.password-input,
+.email-input
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form,
+.register-form
+{
+    display: none;
+}
+
+h2,
+h3
+{
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+p,
+label
+{
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+button,
+input,
+input[type="submit"]
+{
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+
+
+.login-card
+{
+    font-family: Walter Turncoat, Arial;
+    padding: 20px 0;
+    width: 300px;
+    background-color: rgb(235, 190, 135);
+    border-radius: 5px;
+    box-shadow: 0 0 5px yellow;
+    color: rgb(0, 0, 0);
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+.auth-buttons
+{
+    width: 100%;
+    display: flex;
+}
+
+.login-button,
+.register-button
+{
+    width:50%;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.login-button:focus,
+.register-button:focus
+{
+    outline: none;
+}
+
+.login-button
+{
+    border-top-right-radius: 12px;
+    border-top-left-radius: 0px;
+}
+
+.register-button
+{
+    border-top-right-radius: 0px;
+    border-top-left-radius: 12px;
+}
+
+.selected
+{
+    background-color: skyblue;
+}
+
+.selected:hover
+{
+    background-color: skyblue;
+}
+
+.displayed
+{
+    display: flex;
+}

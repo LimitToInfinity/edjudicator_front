@@ -4,53 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="app.css" />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/phaser@3.19.0/dist/phaser-arcade-physics.min.js"></script>  -->
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.19.0/dist/phaser.min.js"></script>
-    <script src="auth.js"></script>
+    <link rel="stylesheet" href="./stylesheets/app.css" />
+    <link rel="stylesheet" href="./stylesheets/auth.css" />
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Walter+Turncoat&display=swap" rel="stylesheet">
+    <script src="./scripts/auth.js"></script>
     <title>Edjudicator</title>
 </head>
 <body>
     <h1>Edjudicator</h1>
 
-    <button class="guest-button">Login as Guest</button></a>
+    <main>
+        <div class="login-card">
+            <h2>Play?</h2>
 
-    <form class="login-form">
-        <div class="username-input">
-            <label for="username">Username:</label>
-            <input type="text" id="login-username" name="username">
-        </div>
-        <div class="password-input">
-            <label for="password">Password:</label>
-            <input type="password" id="login-password" name="password">
-        </div>
-        <!-- <div class="email-input">
-            <label for="email">E-mail:</label>
-            <input type="email" id="login-email" name="email">
-        </div> -->
-        <div class="submit-button">
-            <input type="submit" value="Login" />
-        </div>
-    </form>
+            <button class="guest-button">Login as Guest</button></a>
 
-    <form class="register-form">
-        <div class="username-input">
-            <label for="username">Username:</label>
-            <input type="text" id="register-username" name="username">
-        </div>
-        <div class="password-input">
-            <label for="password">Password:</label>
-            <input type="password" id="register-password" name="password">
-        </div>
-        <div class="email-input">
-            <label for="email">E-mail:</label>
-            <input type="email" id="register-email" name="email">
-        </div>
-        <div class="submit-button">
-            <input type="submit" value="Register" />
-        </div>
-    </form>
-    
+            <h3>OR</h3>
+            <h3>become real by:</h3>
+
+            <div class="auth-buttons">
+                <button class="login-button">Login</button>
+                <button class="register-button">First Timer!</button>
+            </div>
+
+            <form class="login-form">
+                <div class="username-input">
+                    <label for="username">Username</label>
+                    <input type="text" id="login-username" name="username">
+                </div>
+                <div class="password-input">
+                    <label for="password">Password</label>
+                    <input type="password" id="login-password" name="password">
+                </div>
+                <!-- <div class="email-input">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="login-email" name="email">
+                </div> -->
+                <div class="submit-button">
+                    <input type="submit" value="Login" />
+                </div>
+            </form>
+
+            <form class="register-form">
+                <div class="username-input">
+                    <label for="username">Username</label>
+                    <input type="text" id="register-username" name="username">
+                </div>
+                <div class="password-input">
+                    <label for="password">Password</label>
+                    <input type="password" id="register-password" name="password">
+                </div>
+                <div class="email-input">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="register-email" name="email">
+                </div>
+                <div class="submit-button">
+                    <input type="submit" value="Register!" />
+                </div>
+            </div>
+        </form>
+    </main>
     <button class="all-high-scores">All High Scores</button>
 </body>
 </html>

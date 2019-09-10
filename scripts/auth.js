@@ -7,23 +7,41 @@ function postLoad() {
     const highScoresURL = "https://edjudicatorback.herokuapp.com/api/v1/highscores/";
 
     const guestLoginButton = document.querySelector(".guest-button");
+    const loginButton = document.querySelector(".login-button");
+    const registerButton = document.querySelector(".register-button");
     const loginForm = document.querySelector(".login-form");
     const registerForm = document.querySelector(".register-form");
     const allHighScoresButton = document.querySelector(".all-high-scores");
     
     guestLoginButton.addEventListener("click", guestLogin);
+    loginButton.addEventListener("click", showLoginForm);
+    registerButton.addEventListener("click", showRegisterForm);
     loginForm.addEventListener("submit", login);
     registerForm.addEventListener("submit", register);
     allHighScoresButton.addEventListener("click", getAllHighScores);
 
-    function login(event)
+    function showLoginForm()
     {
-        event.preventDefault();
+        registerButton.classList.remove("selected")
+        loginButton.classList.add("selected")
 
-        loginFormData = new FormData(loginForm);
+        registerForm.classList.remove("displayed")
+        loginForm.classList.add("displayed")
+    }
+    
+    function showRegisterForm()
+    {
+        loginButton.classList.remove("selected")
+        registerButton.classList.add("selected")
 
-        const username = loginFormData.get("username");
-        const password = loginFormData.get("password");
+        loginForm.classList.remove("displayed")
+        registerForm.classList.add("displayed")
+    }
+
+    function guestLogin(event)
+    {
+        const username = "Guest";
+        const password = "guest";
 
         const loginBody =
         {
@@ -50,10 +68,14 @@ function postLoad() {
         });
     }
 
-    function guestLogin(event)
+    function login(event)
     {
-        const username = "Guest";
-        const password = "guest";
+        event.preventDefault();
+
+        loginFormData = new FormData(loginForm);
+
+        const username = loginFormData.get("username");
+        const password = loginFormData.get("password");
 
         const loginBody =
         {

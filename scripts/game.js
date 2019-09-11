@@ -2,25 +2,12 @@ document.addEventListener("DOMContentLoaded", postLoad)
 
 function postLoad() {
 
-    token = localStorage.getItem("token");
-
-    if (!token)
-    { 
-        body = document.querySelector("body");
-
-        notLoggedInModal = document.createElement("div");
-        notLoggedInModal.classList.add("not-logged-in-modal");
-        notLoggedInModal.textContent = "Login to slay!"
-
-        homepageButton = document.createElement("button");
-        homepageButton.classList.add("homepage-button");
-        homepageButton.textContent = "Login!"
-        homepageButton.addEventListener("click", goToHomepage);
-
-        notLoggedInModal.append(homepageButton);
-
-        body.prepend(notLoggedInModal);
-    }
+    // const highScoresURL = "127.0.0.1:8000/api/v1/highscores/";
+    
+    const highScoresURL = "https://edjudicatorback.herokuapp.com/api/v1/highscores/";
+    const token = localStorage.getItem("token");
+    
+    getAllHighScores();
 
     const logoutButton = document.querySelector(".logout-button");
     
@@ -37,6 +24,51 @@ function postLoad() {
     function goToHomepage()
     {
         window.location.replace("index.html");
+    }
+
+    function getAllHighScores()
+    {
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        });
+        
+        return fetch(`${highScoresURL}`, {
+            method: 'GET',
+            headers: myHeaders,
+        })
+        .then(response => {
+            if (response.status === 200) { return response.json(); }
+            else
+            {
+                showNotLoggedInModal();
+                throw new Error('Log in or register, yo!');
+            }
+        })
+            .then(highScores => {
+                console.log(highScores);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    function showNotLoggedInModal()
+    {
+        body = document.querySelector("body");
+    
+        notLoggedInModal = document.createElement("div");
+        notLoggedInModal.classList.add("not-logged-in-modal");
+        notLoggedInModal.textContent = "Login to slay!"
+
+        homepageButton = document.createElement("button");
+        homepageButton.classList.add("homepage-button");
+        homepageButton.textContent = "Login!"
+        homepageButton.addEventListener("click", goToHomepage);
+
+        notLoggedInModal.append(homepageButton);
+
+        body.prepend(notLoggedInModal);
     }
 }
 
@@ -193,8 +225,7 @@ function create ()
     function collectAvocado (playerContainer, avocado)
     {
         avocado.disableBody(true, true);
-        score += 10;
-        scoreText.setText('score: ' + score);
+        addScore(10);
     }
 
     enemies = game.physics.add.group({
@@ -224,6 +255,21 @@ function create ()
     function onEnemyOverlap (playerContainer, enemy)
     {
         gameOver();
+    }
+
+    function addScore(points)
+    {
+        score += points;
+        scoreText.setText('score: ' + score);
+        didYouWin();
+    }
+
+    didYouWin = () => {
+        if (score === 80)
+        {
+            scoreText.setText("You Win!");
+            scoreText.setPosition(323, 283);
+        }
     }
 
     gameOver = () => {
@@ -259,8 +305,7 @@ function create ()
         // if (sword.state.attacking)
         // {
             enemy.disableBody(true, true);
-            score += 20;
-            scoreText.setText('score: ' + score);
+            addScore(20);
         // }
     }
 
@@ -486,13 +531,7 @@ function create ()
 }
 
 function update ()
-{    
-    if (score === 80)
-    {
-        scoreText.setText("You Win!");
-        scoreText.setPosition(323, 283);
-    }
-
+{
     sword.y = playerContainer.y + 10;
     if (player.flipX) { sword.x = playerContainer.x - 32; }
     else { sword.x = playerContainer.x + 32; }
@@ -614,4 +653,19 @@ function update ()
             // }
         }
     );
+
+    function authFetchCall(url, method, header, body)
+    {
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${header}`
+        });
+
+        return fetch(url,
+        {
+            method,
+            headers: myHeaders,
+            body: JSON.stringify(body)
+        });
+    }
 }

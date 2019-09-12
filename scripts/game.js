@@ -230,46 +230,75 @@ function create ()
 
     enemies = game.physics.add.group({
         key: 'minotaur',
-        repeat: 2,
-        setXY: { x: 310, y: 0, stepX: 200, stepY: 50 }
+        repeat: 0,
+        setXY: { x: 500, y: 0, stepX: 200, stepY: 50 }
     });
-
+    
     enemies.children.iterate(function (child)
     {
         child.flipX = true;
         child.setBounceY(Phaser.Math.FloatBetween(0.1, 0.3));
         child.body.setOffset(27, 25)
-        // child.body.offset.x = 27;
-        // child.body.offset.y = 25;
         child.setSize(38, 40, false);
     });
     
     // set speeds
     Phaser.Actions.Call(enemies.getChildren(), function(minotaur) {
-        minotaur.speed = - (Math.floor(Math.random() * 100 + 80));
+        minotaur.speed = - (Math.floor(Math.random() * 100 + 130));
     }, game);
     
     game.physics.add.collider(enemies, platforms);
     game.physics.add.overlap(playerContainer, enemies, onEnemyOverlap, null, game);
 
-    function onEnemyOverlap (playerContainer, enemy)
-    {
-        gameOver();
-    }
+    game.physics.add.overlap(sword, enemies, slashEnemy, null, game);
+    // sword.on('enterzone', () => console.log('enterzone'));
+    // sword.on('leavezone', () => console.log('leavezone'));
 
+    function slashEnemy(sword, enemy)
+    {
+        // if (sword.state.attacking)
+        // {
+            enemy.disableBody(true, true);
+            addScore(20);
+        // }
+
+        if (enemies.countActive(true) === 0)
+        {
+            let randomNumber;
+            enemies.children.iterate(function (child)
+            {
+                randomNumber = Math.floor(Math.random() * 250 + 300);
+                child.enableBody(true, randomNumber, 50, true, true);
+            });
+
+            var newEnemy = enemies.create(randomNumber, 50, 'minotaur');
+            newEnemy.flipX = true;
+            newEnemy.setCollideWorldBounds(true);
+            newEnemy.setBounceY(Phaser.Math.FloatBetween(0.1, 0.3));
+            newEnemy.body.setOffset(27, 25)
+            newEnemy.setSize(38, 40, false);
+            newEnemy.speed = - (Math.floor(Math.random() * 100 + 200));
+        }
+    }
+    
     function addScore(points)
     {
         score += points;
         scoreText.setText('score: ' + score);
         didYouWin();
     }
-
+    
     didYouWin = () => {
         if (score === 80)
         {
             scoreText.setText("You Win!");
             scoreText.setPosition(323, 283);
         }
+    }
+    
+    function onEnemyOverlap (playerContainer, enemy)
+    {
+        gameOver();
     }
 
     gameOver = () => {
@@ -294,19 +323,6 @@ function create ()
        
         score = 0;
         scoreText.setText('score: ' + score); 
-    }
-
-    game.physics.add.overlap(sword, enemies, slashEnemy, null, game);
-    // sword.on('enterzone', () => console.log('enterzone'));
-    // sword.on('leavezone', () => console.log('leavezone'));
-
-    function slashEnemy(sword, enemy)
-    {
-        // if (sword.state.attacking)
-        // {
-            enemy.disableBody(true, true);
-            addScore(20);
-        // }
     }
 
     game.anims.create({
@@ -420,16 +436,6 @@ function create ()
         }
     });
 
-    // game.input.keyboard.on('keyup_UP', function (event) {
-    //     if (player.body.onFloor())
-    //     {
-    //         player.body.setOffset(18, 10);
-    //         player.body.offset.x = 18;
-    //         player.body.offset.y = 10;
-    //         player.setSize(14, 26, false);
-    //     }
-    // });
-
     game.input.keyboard.on('keyup_C', function (event) {
         if (c.isUp)
         {
@@ -449,9 +455,6 @@ function create ()
             player.anims.play('horizontalSlash');
             setTimeout(horizontalAttack, 500);
         }
-        // sword.setInteractive();
-        // sword.input.hitArea.setTo(0, 0, 37, 10);
-        // game.input.enableDebug(sword);
     });
 
     function horizontalAttack()
@@ -459,12 +462,6 @@ function create ()
         player.setState(0);
         game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
     }
-
-    // game.input.keyboard.on('keyup_A', function(event) {
-        // game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC
-        // sword.disableInteractive();
-        // game.input.removeDebug(sword);
-    // });
 
     game.input.keyboard.on('keydown_S', function(event) {
         if (player.flipX) { sword.x = playerContainer.x - 32; }
@@ -478,46 +475,6 @@ function create ()
     });
 
     game.input.on('pointerdown', function(pointer, currentlyOver) { console.log("x", pointer.x, "y", pointer.y) });
-
-    // // Phaser 2 hitboxes
-    // // create a group for all the player's hitboxes
-    // hitboxes = game.add.group();
-    // // give all the hitboxes a physics body (I'm using arcade physics btw)
-    // hitboxes.enableBody = true;
-    // // make the hitboxes children of the player. They will now move with the player
-    // player.addChild(hitboxes);
-    // // create a "hitbox" (really just an empty sprite with a physics body)
-    // var verticalSwing = hitboxes.create(0, 0, null);
-    // // set the size of the hitbox, and its position relative to the player
-    // verticalSwing.body.setSize(50, 50, player.width, player.height / 2);
-    // // add some properties to the hitbox. These can be accessed later for use in calculations
-    // verticalSwing.name = "verticalSwing";
-    // verticalSwing.damage = 1;
-    // verticalSwing.knockbackDirection = 0.5;
-    // verticalSwing.knockbackAmt = 600;
-    // // activate a hitbox by namefunction
-    // function enableHitbox(hitboxName) {
-    //     // search all the hitboxes
-    //     for(var i = 0; i < hitboxes.children.length; i++)
-    //     {
-    //         // if we find the hitbox with the "name" specified
-    //         if(hitboxes.children[i].name === hitboxName)
-    //         {
-    //             // reset it
-    //             hitboxes.children[i].reset(0, 0);
-    //         }
-    //     }
-    // }
-    // // disable all active hitboxes
-    // function disableAllHitboxes()
-    // {
-    //     hitboxes.forEachExists(
-    //         function(hitbox)
-    //         {
-    //             hitbox.kill();
-    //         }
-    //     );
-    // }
 
     game.isPlayerContainerAlive = true;
 
@@ -635,12 +592,12 @@ function update ()
                 // endLocationRight = minotaur.x + 100;
                 // console.log(minotaur.x, endLocationLeft, endLocationRight);
 
-                if (minotaur.x <= 200 && minotaur.speed < 0)
+                if (minotaur.x <= 120 && minotaur.speed < 0)
                 {
                     minotaur.speed *= -1;
                     minotaur.flipX = false;
                 }
-                else if (minotaur.x >= 700 && minotaur.speed > 0)
+                else if (minotaur.x >= 730 && minotaur.speed > 0)
                 {
                     minotaur.speed *= -1;
                     minotaur.flipX = true;

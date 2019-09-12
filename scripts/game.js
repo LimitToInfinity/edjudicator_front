@@ -15,9 +15,11 @@ function postLoad() {
 
     function logout()
     {
+        localStorage.removeItem('id');
         localStorage.removeItem('username');
         localStorage.removeItem('email');
         localStorage.removeItem('token');
+        localStorage.removeItem('value');
         goToHomepage();
     }
 
@@ -45,9 +47,7 @@ function postLoad() {
                 throw new Error('Log in or register, yo!');
             }
         })
-            .then(highScores => {
-                console.log(highScores);
-            })
+            .then(createHighScoreCards)
             .catch(error => {
                 console.error(error);
             });
@@ -70,6 +70,33 @@ function postLoad() {
 
         body.prepend(notLoggedInModal);
     }
+
+    function createHighScoreCards(highScores)
+    {
+        highScoresContainer = document.querySelector(".inner-high-scores");
+
+        orderedHighScores = highScores.sort(function (a, b)
+        {
+            return b.value - a.value
+        });
+
+        orderedHighScores.map(highScore => {
+            const playerCard = document.createElement("div");
+            playerCard.classList.add("player-card");
+
+            const username = document.createElement("p");
+            username.innerText = highScore.user.username;
+            username.classList.add("username");
+
+            const value = document.createElement("p");
+            value.innerText = highScore.value;
+            value.classList.add("value");
+            value.id = highScore.user.username;
+
+            playerCard.append(username, value);
+            highScoresContainer.append(playerCard);
+        })
+    }
 }
 
 var config =
@@ -81,7 +108,7 @@ var config =
         default: 'arcade',
         arcade: {
             gravity: { y: 650 },
-            debug: true,
+            debug: false,
         }
     },
     scene: {
@@ -94,7 +121,7 @@ var config =
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY, //or CENTER_BOTH or CENTER_VERTICALLY
         width: 800,
         height: 600
-    }
+    },
 };
 
 var game;
@@ -143,10 +170,30 @@ function preload ()
 
 function create ()
 {
+    const id = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+    const previousScore = parseInt(localStorage.getItem("value"), 10);
+    const highScoresURL = "https://edjudicatorback.herokuapp.com/api/v1/highscores/";
+    const patchURL = `${highScoresURL}${id}/`;
+    const highScore = {value: score};
+
+    if (score > previousScore)
+    {
+        console.log("previous", previousScore, "current", score);
+        
+        localStorage.setItem("value", score);
+        
+        authFetchCall(patchURL, "PATCH", token, highScore);
+
+        valueTag = document.querySelector(`#${username}`);
+        valueTag.innerText = score;
+    }
+
     game = this;
     
-    game.add.image(400, 300, 'sky');
-    
+    game.add.image(400, 300, 'sky');    
+
     score = 0;
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setDepth(1);
 
@@ -237,6 +284,7 @@ function create ()
     
     enemies.children.iterate(function (child)
     {
+        child.setCollideWorldBounds(true);
         child.flipX = true;
         child.setBounceY(Phaser.Math.FloatBetween(0.1, 0.3));
         child.body.setOffset(27, 25)
@@ -286,16 +334,16 @@ function create ()
     {
         score += points;
         scoreText.setText('score: ' + score);
-        didYouWin();
+        // didYouWin();
     }
     
-    didYouWin = () => {
-        if (score % 100 === 0)
-        {
-            scoreText.setText("You Win!");
-            scoreText.setPosition(323, 283);
-        }
-    }
+    // didYouWin = () => {
+    //     if (score % 100 === 0)
+    //     {
+    //         scoreText.setText("You Win!");
+    //         scoreText.setPosition(323, 283);
+    //     }
+    // }
     
     function onEnemyOverlap (playerContainer, enemy)
     {
@@ -483,6 +531,21 @@ function create ()
     //     "crouch": Phaser.Input.Keyboard.KeyCodes.C,
     //     "punch": Phaser.Input.Keyboard.KeyCodes.P,
     // })
+
+    function authFetchCall(url, method, header, body)
+    {
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${header}`
+        });
+
+        return fetch(url,
+        {
+            method,
+            headers: myHeaders,
+            body: JSON.stringify(body)
+        });
+    }
 }
 
 function update ()
@@ -597,19 +660,4 @@ function update ()
             // }
         }
     );
-
-    function authFetchCall(url, method, header, body)
-    {
-        const myHeaders = new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${header}`
-        });
-
-        return fetch(url,
-        {
-            method,
-            headers: myHeaders,
-            body: JSON.stringify(body)
-        });
-    }
 }

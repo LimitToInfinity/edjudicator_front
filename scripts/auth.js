@@ -103,9 +103,11 @@ function postLoad() {
             .then(res => res.json())
             .then(json =>
             {
+                localStorage.setItem('id', json.id);
                 localStorage.setItem('username', json.username);
                 localStorage.setItem('email', json.email);
                 localStorage.setItem('token', json.token);
+                localStorage.setItem('value', json.value);
                 window.location.replace("game.html");
             });
 
@@ -130,13 +132,39 @@ function postLoad() {
         }
 
         return unAuthFetchCall(loginURL, "POST", loginBody)
-        .then(res => res.json())
+        .then(response => {
+            if (response.status === 201) { return response.json(); }
+            else
+            {
+                throw new Error("That login is funky yo!");
+            }
+        })
         .then(json =>
         {
+            localStorage.setItem('id', json.id);
             localStorage.setItem('username', json.username);
             localStorage.setItem('email', json.email);
             localStorage.setItem('token', json.token);
+            localStorage.setItem('value', json.value);
             window.location.replace("game.html");
+        })
+        .catch(error => {
+            if (loginForm.querySelector("#login-error-message"))
+            {
+                lastErrorMessage = loginForm.querySelector("#login-error-message");
+                loginForm.removeChild(lastErrorMessage);
+            }
+            
+            errorElement = document.createElement("p");
+            errorElement.innerText = error.message;
+            errorElement.style.color = "red";
+            errorElement.id = "login-error-message";
+
+            loginForm.append(errorElement);
+            
+            gameContainer = document.querySelector("canvas");
+            document.body.removeChild(gameContainer);
+            runDudeAnimations();
         });
     }
 
@@ -160,13 +188,39 @@ function postLoad() {
         }
 
         return unAuthFetchCall(registerURL, "POST", registerBody)
-        .then(res => res.json())
+        .then(response => {
+            if (response.status === 201) { return response.status; }
+            else
+            {
+                throw new Error("That registration is funky yo!");
+            }
+        })
         .then(json =>
         {
+            localStorage.setItem('id', json.id);
             localStorage.setItem('username', json.username);
             localStorage.setItem('email', json.email);
             localStorage.setItem('token', json.token);
+            localStorage.setItem('value', json.value);
             window.location.replace("game.html");
+        })
+        .catch(error => {
+            if (registerForm.querySelector("#register-error-message"))
+            {
+                lastErrorMessage = registerForm.querySelector("#register-error-message");
+                registerForm.removeChild(lastErrorMessage);
+            }
+            
+            errorElement = document.createElement("p");
+            errorElement.innerText = error.message;
+            errorElement.style.color = "red";
+            errorElement.id = "register-error-message";
+
+            registerForm.append(errorElement);
+
+            gameContainer = document.querySelector("canvas");
+            document.body.removeChild(gameContainer);
+            runDudeAnimations();
         });
     }
 
@@ -240,6 +294,7 @@ function postLoad() {
                 width: 100,
                 height: 100
             },
+            canvas: document.querySelector("canvas"),
         };
     
     

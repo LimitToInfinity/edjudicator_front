@@ -26,6 +26,12 @@ main
     display: none;
 }
 
+#login-error-message,
+#register-error-message
+{
+    margin-top: 10px;
+}
+
 h2,
 h3
 {

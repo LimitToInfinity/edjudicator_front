@@ -47,6 +47,8 @@ function postLoad() {
 
     function guestLogin(event)
     {
+        runLoadingAnimations();
+
         const username = "Guest";
         const password = "guest";
         
@@ -114,6 +116,8 @@ function postLoad() {
     {
         event.preventDefault();
 
+        runLoadingAnimations();
+
         loginFormData = new FormData(loginForm);
 
         const username = loginFormData.get("username");
@@ -139,6 +143,8 @@ function postLoad() {
     function register(event)
     {
         event.preventDefault();
+
+        runLoadingAnimations();
 
         registerFormData = new FormData(registerForm);
 
@@ -213,59 +219,118 @@ function postLoad() {
             body: JSON.stringify(body)
         });
     }
-}
 
-var config =
-{
-    type: Phaser.WEBGL,
-    width: 100,
-    height: 100,
-    "transparent": true,
-    scene: {
-        preload: preload,
-        create: create,
-        update: update,
-    },
-    scale: {
-        parent: 'animations',
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY, //or CENTER_BOTH or CENTER_VERTICALLY
-        width: 100,
-        height: 100
-    },
-};
-
-var game;
-var player;
-var background = {};
-
-var game = new Phaser.Game(config);
-
-function preload ()
-{
-    game = this;
-
-    game.load.spritesheet('dude', './../assets/adventurer.png',
+    runDudeAnimations();
+    function runDudeAnimations()
     {
-        frameWidth: 50, frameHeight: 37
-    });
-}
-
-function create ()
-{
-    game = this;
+        var configDude =
+        {
+            type: Phaser.WEBGL,
+            width: 100,
+            height: 100,
+            "transparent": true,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update,
+            },
+            scale: {
+                parent: 'animations',
+                autoCenter: Phaser.Scale.CENTER_HORIZONTALLY, //or CENTER_BOTH or CENTER_VERTICALLY
+                width: 100,
+                height: 100
+            },
+        };
     
-    player = game.add.sprite(47, 45, 'dude');
-    player.setScale(2);
-
-    game.anims.create({
-        key: 'all-animations',
-        frames: game.anims.generateFrameNumbers('dude', { start: 0, end: 108 } ),
-        frameRate: 10,
-        repeat: -1
-    });
-}
-
-function update ()
-{
-    player.anims.play("all-animations", true);
+    
+        var player;
+        var gameDude = new Phaser.Game(configDude);
+    
+        function preload ()
+        {
+            game = this;
+            
+            game.load.spritesheet('dude', './../assets/adventurer.png',
+            {
+                frameWidth: 50, frameHeight: 37
+            });
+        }
+    
+        function create ()
+        {
+            game = this;
+            
+            player = game.add.sprite(47, 45, 'dude');
+            player.setScale(2);
+    
+            game.anims.create({
+                key: 'all-dude-animations',
+                frames: game.anims.generateFrameNumbers('dude', { start: 0, end: 108 } ),
+                frameRate: 10,
+                repeat: -1
+            });
+        }    
+    
+        function update ()
+        {
+            player.anims.play("all-dude-animations", true);
+        }
+    }
+    
+    function runLoadingAnimations()
+    {
+        var configMinotaur =
+        {
+            type: Phaser.WEBGL,
+            width: 100,
+            height: 100,
+            "transparent": true,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update,
+            },
+            scale: {
+                parent: '.loading',
+                autoCenter: Phaser.Scale.CENTER_HORIZONTALLY, //or CENTER_BOTH or CENTER_VERTICALLY
+                width: 100,
+                height: 100
+            },
+            canvas: document.querySelector("canvas"),
+        };
+    
+        var minotaur;
+        new Phaser.Game(configMinotaur);
+    
+        function preload ()
+        {
+            game = this;
+    
+            game.load.spritesheet('minotaur', './../assets/minotaur.png',
+            {
+                frameWidth: 96, frameHeight: 96
+            });
+        }
+    
+        function create ()
+        {
+            game = this;
+            
+            minotaur = game.add.sprite(49, 67, 'minotaur');
+            minotaur.setScale(1);
+            scoreText = game.add.text(0, 17, 'loadi...', { fontSize: '20px', fill: '#000' }).setDepth(-1);
+            
+            game.anims.create({
+                key: 'all-minotaur-animations',
+                frames: game.anims.generateFrameNumbers('minotaur', { start: 0, end: 95 } ),
+                frameRate: 30,
+                repeat: -1
+            });
+        }
+    
+        function update ()
+        {
+            minotaur.anims.play("all-minotaur-animations", true);
+        }
+    }
 }

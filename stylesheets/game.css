@@ -1,3 +1,16 @@
+header
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-spacer,
+.right-spacer
+{
+    margin-top: 40px;
+    width: 25%;
+}
+
 .not-logged-in-modal
 {
     position: fixed;

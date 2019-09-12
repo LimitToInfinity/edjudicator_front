@@ -81,7 +81,7 @@ var config =
         default: 'arcade',
         arcade: {
             gravity: { y: 650 },
-            debug: false,
+            debug: true,
         }
     },
     scene: {
@@ -147,6 +147,7 @@ function create ()
     
     game.add.image(400, 300, 'sky');
     
+    score = 0;
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setDepth(1);
 
     bird = game.add.sprite(100, 100, 'bird', 0).setScale(0.5);
@@ -196,7 +197,7 @@ function create ()
     playerContainer.add( player );
     
     // add weapon hit box
-    sword = game.add.zone(0, 0, 37, 10);
+    sword = game.add.zone(0, 0, 25, 10);
     
     // sword.body.moves = false;
     //new Phaser.Geom.Rectangle(playerContainer.x, playerContainer.y, 20, 20), Phaser.Geom.Rectangle.Contains);
@@ -267,8 +268,8 @@ function create ()
             let randomNumber;
             enemies.children.iterate(function (child)
             {
-                randomNumber = Math.floor(Math.random() * 250 + 350);
-                child.enableBody(true, randomNumber, 50, true, true);
+                randomNumber = Math.floor(Math.random() * 100 + 350);
+                child.enableBody(true, randomNumber, 0, true, true);
             });
 
             var newEnemy = enemies.create(randomNumber, 50, 'minotaur');
@@ -320,9 +321,6 @@ function create ()
         game.time.delayedCall(1200, function() {
           game.scene.restart();
         }, [], game);
-       
-        score = 0;
-        scoreText.setText('score: ' + score); 
     }
 
     game.anims.create({
@@ -356,14 +354,14 @@ function create ()
     game.anims.create({
         key: 'verticalSlash',
         frames: game.anims.generateFrameNumbers('dude', { start: 47, end: 52 }),
-        frameRate: 14,
+        frameRate: 12,
         repeat: 0
     });
 
     game.anims.create({
         key: 'horizontalSlash',
         frames: game.anims.generateFrameNumbers('dude', { start: 53, end: 58 }),
-        frameRate: 12,
+        frameRate: 24,
         repeat: 0
     });
 
@@ -453,26 +451,26 @@ function create ()
             sword.body.setAllowGravity(false);
             player.setState(1);
             player.anims.play('horizontalSlash');
-            setTimeout(horizontalAttack, 500);
+            setTimeout(endAttack, 250);
         }
     });
 
-    function horizontalAttack()
+    game.input.keyboard.on('keydown_S', function(event) {
+        if (player.state === 0 && !(cursors.left.isDown || cursors.right.isDown))
+        {
+            game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
+            sword.body.setAllowGravity(false);
+            player.setState(1);
+            player.anims.play('verticalSlash');
+            setTimeout(endAttack, 500);
+        }
+    });
+
+    function endAttack()
     {
         player.setState(0);
         game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
     }
-
-    game.input.keyboard.on('keydown_S', function(event) {
-        if (player.flipX) { sword.x = playerContainer.x - 32; }
-        else { sword.x = playerContainer.x + 32; }
-        game.physics.world.enable(sword); // (0) DYNAMIC (1) STATIC
-        sword.body.setAllowGravity(false);
-    });
-
-    game.input.keyboard.on('keyup_S', function(event) {
-        game.physics.world.disable(sword); // (0) DYNAMIC (1) STATIC        
-    });
 
     game.input.on('pointerdown', function(pointer, currentlyOver) { console.log("x", pointer.x, "y", pointer.y) });
 
@@ -490,8 +488,8 @@ function create ()
 function update ()
 {
     sword.y = playerContainer.y + 10;
-    if (player.flipX) { sword.x = playerContainer.x - 32; }
-    else { sword.x = playerContainer.x + 32; }
+    if (player.flipX) { sword.x = playerContainer.x - 28; }
+    else { sword.x = playerContainer.x + 28; }
 
     game = this;
 
@@ -530,17 +528,6 @@ function update ()
             // bench.body.checkCollision.up = false;
             trashCan.body.checkCollision.up = false;
         }
-    }
-    else if (s.isDown) // Phaser.Input.Keyboard.JustDown(s)
-    {
-        sword.y = playerContainer.y + 10;
-        if (player.flipX) { sword.x = playerContainer.x - 32; }
-        else { sword.x = playerContainer.x + 32; }
-        player.anims.play('verticalSlash', true);
-    }
-    else if (a.isDown)
-    {
-        
     }
     else if (d.isDown)
     {

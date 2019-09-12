@@ -104,7 +104,7 @@ var sword;
 var bird;
 var platforms;
 var ground;
-var bench;
+// var bench;
 var trashCan;
 var avocados;
 var enemies;
@@ -170,17 +170,17 @@ function create ()
     ground = platforms.create(400, 597, 'empty'); // ground
     ground.setSize(800, 5);
     
-    bench = platforms.create(213, 534, 'empty'); //bench platform
-    bench.setSize(222, 2);
-    bench.body.checkCollision.down = false;
-    bench.body.checkCollision.left = false;
-    bench.body.checkCollision.right = false;
+    // bench = platforms.create(213, 534, 'empty'); //bench platform
+    // bench.setSize(222, 2);
+    // bench.body.checkCollision.down = false;
+    // bench.body.checkCollision.left = false;
+    // bench.body.checkCollision.right = false;
 
     trashCan = platforms.create(58, 509, 'empty'); //trash can platform
     trashCan.setSize(56, 4);
     trashCan.body.checkCollision.down = false;
     trashCan.body.checkCollision.left = false;
-    // trashCan.body.checkCollision.right = false;
+    trashCan.body.checkCollision.right = false;
     
     playerContainer = game.add.container(59, 50).setDepth(1).setScale(2);
     game.physics.world.enable(playerContainer);
@@ -231,7 +231,7 @@ function create ()
     enemies = game.physics.add.group({
         key: 'minotaur',
         repeat: 0,
-        setXY: { x: 500, y: 0, stepX: 200, stepY: 50 }
+        setXY: { x: 310, y: 0, stepX: 200, stepY: 50 }
     });
     
     enemies.children.iterate(function (child)
@@ -267,7 +267,7 @@ function create ()
             let randomNumber;
             enemies.children.iterate(function (child)
             {
-                randomNumber = Math.floor(Math.random() * 250 + 300);
+                randomNumber = Math.floor(Math.random() * 250 + 350);
                 child.enableBody(true, randomNumber, 50, true, true);
             });
 
@@ -277,7 +277,7 @@ function create ()
             newEnemy.setBounceY(Phaser.Math.FloatBetween(0.1, 0.3));
             newEnemy.body.setOffset(27, 25)
             newEnemy.setSize(38, 40, false);
-            newEnemy.speed = - (Math.floor(Math.random() * 100 + 200));
+            newEnemy.speed = - (Math.floor(Math.random() * 100 + 180));
         }
     }
     
@@ -289,7 +289,7 @@ function create ()
     }
     
     didYouWin = () => {
-        if (score === 80)
+        if (score % 100 === 0)
         {
             scoreText.setText("You Win!");
             scoreText.setPosition(323, 283);
@@ -431,7 +431,7 @@ function create ()
         {
             playerContainer.body.offset.y = -8;
             playerContainer.body.setSize(14, 26, false);
-            bench.body.checkCollision.up = true;
+            // bench.body.checkCollision.up = true;
             trashCan.body.checkCollision.up = true;
         }
     });
@@ -441,7 +441,7 @@ function create ()
         {
             playerContainer.body.offset.y = -8;
             playerContainer.body.setSize(14, 26, false);
-            bench.body.checkCollision.up = true;
+            // bench.body.checkCollision.up = true;
             trashCan.body.checkCollision.up = true;
         }
     });
@@ -527,7 +527,7 @@ function update ()
         {
             // playerContainer.body.offset.y = 5;
             // playerContainer.body.setSize(14, 20, false);
-            bench.body.checkCollision.up = false;
+            // bench.body.checkCollision.up = false;
             trashCan.body.checkCollision.up = false;
         }
     }
@@ -592,7 +592,7 @@ function update ()
                 // endLocationRight = minotaur.x + 100;
                 // console.log(minotaur.x, endLocationLeft, endLocationRight);
 
-                if (minotaur.x <= 120 && minotaur.speed < 0)
+                if (minotaur.x <= 60 && minotaur.speed < 0)
                 {
                     minotaur.speed *= -1;
                     minotaur.flipX = false;

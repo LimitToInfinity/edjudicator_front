@@ -4,11 +4,64 @@ header
     justify-content: space-between;
 }
 
-.left-spacer,
-.right-spacer
+.left-header-spacer,
+.right-header-spacer
 {
     margin-top: 40px;
     width: 25%;
+}
+
+.controls
+{
+    width: 100%;
+    font-size: 1.5rem;
+    display: flex;
+}
+
+.controls h6
+{
+    margin-top: 15px;
+    padding-bottom: 15px;
+    color: #f77f00;
+    text-shadow: 0.6px 0.6px 1px rgb(145, 94, 0), -0.6px 0.6px 1px rgb(145, 94, 0), 0.6px -0.6px 1px rgb(145, 94, 0), -0.6px -0.6px 1px rgb(145, 94, 0);
+}
+
+.controls .keys
+{
+    padding-bottom: 10px;
+    color: red;
+    font-size: 1.8rem;
+    text-shadow: 0px 0px 3px rgb(58, 0, 0);
+    text-align: center;
+}
+
+.move-keys,
+.action-keys
+{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.move-keys
+{
+    padding-right: 50px;
+    align-items: flex-end;
+}
+
+.action-keys
+{
+    padding-left: 50px;
+    align-items: flex-start;
+}
+
+.inner-move-keys,
+.inner-action.keys
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .not-logged-in-modal

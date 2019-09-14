@@ -161,7 +161,7 @@ function postLoad() {
             errorElement.id = "login-error-message";
 
             loginForm.append(errorElement);
-            
+
             gameContainer = document.querySelector("canvas");
             document.body.removeChild(gameContainer);
             runDudeAnimations();
@@ -189,7 +189,7 @@ function postLoad() {
 
         return unAuthFetchCall(registerURL, "POST", registerBody)
         .then(response => {
-            if (response.status === 201) { return response.status; }
+            if (response.status === 201) { return response.json(); }
             else
             {
                 throw new Error("That registration is funky yo!");

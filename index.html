@@ -1,90 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./stylesheets/app.css" />
-    <link rel="stylesheet" href="./stylesheets/auth.css" />
-    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Walter+Turncoat&display=swap" rel="stylesheet">
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.19.0/dist/phaser.min.js"></script>
-    <script src="./scripts/auth.js"></script>
-    <title>Edjudicator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./stylesheets/app.css" />
+  <link rel="stylesheet" href="./stylesheets/auth.css" />
+  <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Walter+Turncoat&display=swap" rel="stylesheet">
+  <script src="//cdn.jsdelivr.net/npm/phaser@3.19.0/dist/phaser.min.js"></script>
+  <script src="./scripts/auth.js"></script>
+  <title>Edjudicator</title>
 </head>
 <body>
-    <h1>Edjudicator</h1>
+  <h1>Edjudicator</h1>
 
-    <main>
-        <div class="login-card">
-            <h2>Play?</h2>
+  <main>
+    <div class="login-card">
+      <h2>Play?</h2>
 
-            <button class="guest-button">Login as Guest</button></a>
+      <button class="guest-button">Login as Guest</button></a>
 
-            <h3>OR</h3>
-            <h3>keep it real by:</h3>
+      <h3>OR</h3>
+      <h3>keep it real by:</h3>
 
-            <div class="auth-buttons">
-                <button class="login-button">Login</button>
-                <button class="register-button">First Timer!</button>
-            </div>
+      <div class="auth-buttons">
+        <button class="login-button">Login</button>
+        <button class="register-button">First Timer!</button>
+      </div>
 
-            <form class="guest-login-form">
-                <div class="username-input">
-                    <label for="username">Username</label>
-                    <input type="text" id="guest-login-username" name="username">
-                </div>
-                <div class="password-input">
-                    <label for="password">Password</label>
-                    <input type="text" id="guest-login-password" name="password">
-                </div>
-                <!-- <div class="email-input">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="guest-login-email" name="email">
-                </div> -->
-                <div class="submit-button">
-                    <input type="submit" value="Login" />
-                </div>
-            </form>
-
-            <form class="login-form">
-                <div class="username-input">
-                    <label for="username">Username</label>
-                    <input type="text" id="login-username" name="username">
-                </div>
-                <div class="password-input">
-                    <label for="password">Password</label>
-                    <input type="password" id="login-password" name="password">
-                </div>
-                <!-- <div class="email-input">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="login-email" name="email">
-                </div> -->
-                <div class="submit-button">
-                    <input type="submit" value="Login" />
-                </div>
-            </form>
-
-            <form class="register-form">
-                <div class="username-input">
-                    <label for="username">Username</label>
-                    <input type="text" id="register-username" name="username">
-                </div>
-                <div class="password-input">
-                    <label for="password">Password</label>
-                    <input type="password" id="register-password" name="password">
-                </div>
-                <div class="email-input">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="register-email" name="email">
-                </div>
-                <div class="submit-button">
-                    <input type="submit" value="Register!" />
-                </div>
-            </form>
+      <form class="guest-login-form">
+        <div class="username-input">
+          <label for="username">Username</label>
+          <input type="text" id="guest-login-username" name="username">
         </div>
-    </main>
-    <section class="animations"></section>
-    <section class="loading"></section>
-    <!-- <button class="all-high-scores">All High Scores</button> -->
+        <div class="password-input">
+          <label for="password">Password</label>
+          <input type="text" id="guest-login-password" name="password">
+        </div>
+        <!-- <div class="email-input">
+          <label for="email">E-mail</label>
+          <input type="email" id="guest-login-email" name="email">
+        </div> -->
+        <div class="submit-button">
+          <input type="submit" value="Login" />
+        </div>
+      </form>
+
+      <form class="login-form">
+        <div class="username-input">
+          <label for="username">Username</label>
+          <input type="text" id="login-username" name="username">
+        </div>
+        <div class="password-input">
+          <label for="password">Password</label>
+          <input type="password" id="login-password" name="password">
+        </div>
+        <!-- <div class="email-input">
+          <label for="email">E-mail</label>
+          <input type="email" id="login-email" name="email">
+        </div> -->
+        <div class="submit-button">
+          <input type="submit" value="Login" />
+        </div>
+      </form>
+
+      <form class="register-form">
+        <div class="username-input">
+          <label for="username">Username</label>
+          <input type="text" id="register-username" name="username">
+        </div>
+        <div class="password-input">
+          <label for="password">Password</label>
+          <input type="password" id="register-password" name="password">
+        </div>
+        <div class="email-input">
+          <label for="email">E-mail</label>
+          <input type="email" id="register-email" name="email">
+        </div>
+        <div class="submit-button">
+          <input type="submit" value="Register!" />
+        </div>
+      </form>
+    </div>
+  </main>
+  <section class="animations"></section>
+  <section class="loading"></section>
+  <!-- <button class="all-high-scores">All High Scores</button> -->
 </body>
 </html>

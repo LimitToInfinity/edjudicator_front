@@ -1,140 +1,140 @@
 header
 {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .left-header-spacer,
 .right-header-spacer
 {
-    margin-top: 40px;
-    width: 25%;
+  margin-top: 40px;
+  width: 25%;
 }
 
 .controls
 {
-    width: 100%;
-    font-size: 1.5rem;
-    display: flex;
+  width: 100%;
+  font-size: 1.5rem;
+  display: flex;
 }
 
 .controls h6
 {
-    margin-top: 15px;
-    padding-bottom: 15px;
-    color: #f77f00;
-    text-shadow: 0.6px 0.6px 1px rgb(145, 94, 0), -0.6px 0.6px 1px rgb(145, 94, 0), 0.6px -0.6px 1px rgb(145, 94, 0), -0.6px -0.6px 1px rgb(145, 94, 0);
+  margin-top: 15px;
+  padding-bottom: 15px;
+  color: #f77f00;
+  text-shadow: 0.6px 0.6px 1px rgb(145, 94, 0), -0.6px 0.6px 1px rgb(145, 94, 0), 0.6px -0.6px 1px rgb(145, 94, 0), -0.6px -0.6px 1px rgb(145, 94, 0);
 }
 
 .controls .keys
 {
-    padding-bottom: 10px;
-    color: red;
-    font-size: 1.8rem;
-    text-shadow: 0px 0px 3px rgb(58, 0, 0);
-    text-align: center;
+  padding-bottom: 10px;
+  color: red;
+  font-size: 1.8rem;
+  text-shadow: 0px 0px 3px rgb(58, 0, 0);
+  text-align: center;
 }
 
 .move-keys,
 .action-keys
 {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 .move-keys
 {
-    padding-right: 50px;
-    align-items: flex-end;
+  padding-right: 50px;
+  align-items: flex-end;
 }
 
 .action-keys
 {
-    padding-left: 50px;
-    align-items: flex-start;
+  padding-left: 50px;
+  align-items: flex-start;
 }
 
 .inner-move-keys,
 .inner-action.keys
 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .high-scores
 {
-    margin: 10px 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin: 10px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header-high-scores,
 .inner-high-scores
 {
-    width: 70%;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
-    font-family: Walter Turncoat, Arial;
+  width: 70%;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  font-family: Walter Turncoat, Arial;
 }
 
 .header-high-scores h2
 {
-    margin-bottom: 15px;
-    font-size: 2.1rem;
-    color: #f77f00;
-    text-shadow: 0 0 3px black;
+  margin-bottom: 15px;
+  font-size: 2.1rem;
+  color: #f77f00;
+  text-shadow: 0 0 3px black;
 }
 
 .player-card
 {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 5px 10px 10px;
-    background-color: rgb(104, 185, 218);
-    padding: 8px 11px;
-    box-shadow: 0 1px 3px white;
-    border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 5px 10px 10px;
+  background-color: rgb(104, 185, 218);
+  padding: 8px 11px;
+  box-shadow: 0 1px 3px white;
+  border-radius: 5px;
 }
 
 .username
 {
-    padding-bottom: 5px;
-    color: gold;
-    text-shadow: 0px 0px 3px rgb(58, 53, 0);
+  padding-bottom: 5px;
+  color: gold;
+  text-shadow: 0px 0px 3px rgb(58, 53, 0);
 }
 
 .value
 {
-    color: orange;
-    text-shadow: 0px 0px 3px rgb(58, 37, 0);
+  color: orange;
+  text-shadow: 0px 0px 3px rgb(58, 37, 0);
 }
 
 .not-logged-in-modal
 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    min-height: 100vh;
-    min-width: 100vw;
-    background-color: hsla(0, 0%, 0%, 0.9);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 9rem;
-    padding: auto auto;
-    color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: hsla(0, 0%, 0%, 0.9);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 9rem;
+  padding: auto auto;
+  color: white;
 }
 
 .homepage-button
 {
-    font-size: 5rem;
+  font-size: 5rem;
 }

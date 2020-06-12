@@ -1,6 +1,6 @@
 /* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
+  v2.0 | 20110126
+  License: none (public domain)
 */
 
 html, body, div, span, applet, object, iframe,
@@ -51,33 +51,33 @@ table {
 
 body
 {
-    background-color: rgba(135, 207, 235, 0.879)
+  background-color: rgba(135, 207, 235, 0.879)
 }
 
 h1
 {
-    font-family: Bungee Shade, sans-serif;
-    margin: 1.5rem 0;
-    color: rgb(255, 166, 0);
-    text-align: center;
-    font-size: 3rem;
-    text-shadow: 1px 1px 2px rgb(145, 94, 0), -1px 1px 2px rgb(145, 94, 0), 1px -1px 2px rgb(145, 94, 0), -1px -1px 2px rgb(145, 94, 0);
+  font-family: Bungee Shade, sans-serif;
+  margin: 1.5rem 0;
+  color: rgb(255, 166, 0);
+  text-align: center;
+  font-size: 3rem;
+  text-shadow: 1px 1px 2px rgb(145, 94, 0), -1px 1px 2px rgb(145, 94, 0), 1px -1px 2px rgb(145, 94, 0), -1px -1px 2px rgb(145, 94, 0);
 }
 
 button,
 input[type="submit"]
 {
-    background-color: gold;
-    color: black;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+  background-color: gold;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 button:hover,
 input[type="submit"]:hover
 {
-    background-color: rgb(254, 232, 108);
-    color: black;
-    border: none;
+  background-color: rgb(254, 232, 108);
+  color: black;
+  border: none;
 }
